@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aurelio Antonio Obando Video</title>
+    <style>
+      div.contenedor {
+        text-align: center;
+      }
+      video {
+        height: auto;
+      }
+      div#progreso {
+        width: 450px;
+        background-color: red;
+        margin: auto;
+        height: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lista de tus videos</h1>
+    <div class="contenedor">
+      <video autoplay controls width="450" height="450"></video>
+      <!-- <div id="progreso"></div>
+        <div id="botones"></div> -->
+    </div>
+    <br />
+    <button id="bt1">rangos</button>
+    <button id="bt2">mostrar rangos</button>
+    <button id="bt3">Show</button>
+
+    <div>
+      <div>
+        <button class="resolutions" id="res1" pos="0">240</button>
+      </div>
+      <div>
+        <button class="resolutions" id="res2" pos="0">240</button>
+        <button class="resolutions" id="res2" pos="1">360</button>
+        <button class="resolutions" id="res2" pos="2">480</button>
+        <button class="resolutions" id="res2" pos="3">720</button>
+      </div>
+    </div>
+
+    <script defer src="js/video-html/mux.min.js"></script>
+    <script defer type="module">
+      import api from "/js/video-html/hlsp.js";
+      (async function ini() {
+        let videoElement = document.querySelector("video");
+        let hls = await api(videoElement);
+        console.log(hls)
+
+        hls.on("finish", () => {
+          console.log("el video termino");
+        });
+
+        hls.on("add", async ()=>{
+            console.log(await hls.getTimeRanges())
+        })
+      })()
+    </script>
+  </body>
+</html>
